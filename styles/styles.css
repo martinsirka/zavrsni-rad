@@ -23,6 +23,12 @@ h5,
     background-color: #b34848;
 }
 
+.comment ul {
+    list-style: none;
+}
+
+
+
 @media (min-width: 40em) {
     .blog-title {
         font-size: 3.5rem;
