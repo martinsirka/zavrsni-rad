@@ -4,7 +4,10 @@ include 'conection_to_db.php';
 
 $post_id = $_GET['id'];
 
-$sql = "SELECT * FROM posts WHERE posts.id = $post_id";
+$sql = "SELECT posts.id, posts.title, posts.body, posts.author, posts.created_at, 
+                comments.id AS commentID, comments.post_id, comments.author AS authorName, comments.tekst 
+                FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = $post_id";
+                
     $statement = $conn->prepare($sql);
 
     // izvrsavamo upit
@@ -15,11 +18,17 @@ $sql = "SELECT * FROM posts WHERE posts.id = $post_id";
     $statement->setFetchMode(PDO::FETCH_ASSOC);
 
     // punimo promenjivu sa rezultatom upita
-    $posts = $statement->fetchAll(); 
+    $postWithComments = $statement->fetchAll(); 
+
+    $post = $postWithComments[0];
+    $comments = [];
+        foreach($postWithComments as $comment) {
+        array_push($comments, ['author' => $comment['authorName'], 'text' => $comment['tekst']]);
+    }
 
     // koristite var_dump kada god treba da proverite sadrzaj neke promenjive
         // echo '<pre>';
-        // var_dump($posts);
+        // var_dump($comments);
         // echo '</pre>';
         ?>
 
@@ -30,13 +39,9 @@ $sql = "SELECT * FROM posts WHERE posts.id = $post_id";
             <div class="col-sm-8 blog-main">
                 
                 <div class="blog-post">
-                        
-                    <?php foreach ($posts as $post) { ?>
 
                         <h2 class="blog-post-title">
-                            <a href = "single_post.php" >
-                                <?php echo ($post['title']) ?>
-                            </a>
+                            <?php echo ($post['title']) ?>
                         </h2>
                         <p class="blog-post-meta">
                             <?php echo date('d/m/Y H:i\h', strtotime($post['created_at'])) ?>
@@ -45,15 +50,24 @@ $sql = "SELECT * FROM posts WHERE posts.id = $post_id";
                         <p>
                             <?php echo ($post['body']) ?>
                         </p>
-                    
-                    <?php } ?>
 
                 </div><!-- /.blog-post -->
 
+                <button type="button" class="btn btn-secondary">Hide comments</button>
+
+                
+
                 <div class="comment">
-                    <ul>
-                        <li>Sample comment</li>
-                    </ul>
+                    <?php 
+                        foreach ($comments as $comment) { 
+                    ?>
+                        <ul>
+                            <li><a href="#"><?php echo ($comment['author'])  ?></a></li>
+                            <li><?php echo ($comment['text']) . "<hr/>" ?></li>
+                        </ul>
+                    <?php 
+                        } 
+                    ?>
                 </div>
 
                 <nav class="blog-pagination">
