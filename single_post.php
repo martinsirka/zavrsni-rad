@@ -4,7 +4,11 @@ include 'conection_to_db.php';
 
 $post_id = $_GET['id'];
 
-$sql = "SELECT posts.id, posts.title, posts.body, posts.author, posts.created_at, 
+if (!empty($_GET['error'])) {
+    $error = true;
+}
+
+$sql = "SELECT posts.id AS postsID, posts.title, posts.body, posts.author, posts.created_at, 
                 comments.id AS commentID, comments.post_id, comments.author AS authorName, comments.tekst 
                 FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = $post_id";
                 
@@ -53,10 +57,16 @@ $sql = "SELECT posts.id, posts.title, posts.body, posts.author, posts.created_at
 
                 </div><!-- /.blog-post -->
 
-                    <form action="" method="POST">
-                        <p class="writeComment">Example text</p>
-                        <button class="comm-btn btn btn-default" href="#">Submit</button> 
+                    <form action="create_comment.php" method="POST">
+                        <input type="hidden" name="postId" value="<?php echo $post_id ?>">
+                        <input type="text" name="author" placeholder="Author">
+                        <textarea class="writeComment" placeholder="Your comment.." cols="50" rows="5" name="comment"></textarea>
+                        <button type="submit" class="comm-btn btn btn-default">Submit</button>
                     </form>
+
+                    <?php if ($error) { ?>
+                        <div class="alert alert-danger">All fields are required!</div>
+                    <?php } ?>
                     
                     <?php if(!empty($comment['tekst'])) {?>
                         <button type="button" class="comm-btn btn btn-default" onclick="myFunction()">Hide comments</button>
@@ -68,7 +78,13 @@ $sql = "SELECT posts.id, posts.title, posts.body, posts.author, posts.created_at
                             <ul>
                                 <li><a href="#"><?php echo ($comment['author'])  ?></a></li>
                                 <li><?php echo ($comment['text']) ?></li>
+                                <li>  
+                                <form method="post" action="delete_comment.php?cid=<?php echo ($comment["commentID"]) ?>&id=<?php echo ($post["postsID"]) ?>">
+                                <button class="comm-btn btn btn-default">Delete comment</button>
+                                </form>
+                                </li>
                             </ul>
+                            
                         <?php } ?>
                     </div>
                 <?php }?>
