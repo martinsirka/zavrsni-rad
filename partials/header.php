@@ -7,7 +7,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
-    <script src="script.js"></script>
 
     <title>Vivify Blog</title>
 
@@ -17,6 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="styles/blog.css" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet">
+    <script type="text/javascript" src="JavaScript/script.js"></script>
 </head>
 
 <body>

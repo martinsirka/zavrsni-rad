@@ -39,12 +39,12 @@
                             <?php echo ($post['title']) ?>
                         </a>
                     </h2>
+                    <p>
+                        <?php echo substr(($post['body']), 0, 100) ?>
+                    </p>
                     <p class="blog-post-meta">
                         <?php echo date('d/m/Y H:i\h', strtotime($post['created_at'])) ?>
                         <a href="#"><?php echo ($post['author']) ?></a>
-                    </p>
-                    <p>
-                        <?php echo substr(($post['body']), 0, 100) ?>
                     </p>
                 
                 <?php } ?>

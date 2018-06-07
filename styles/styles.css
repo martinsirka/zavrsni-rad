@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 @media (min-width: 48em) {
     html {
         font-size: 14px;
@@ -23,11 +29,41 @@ h5,
     background-color: #b34848;
 }
 
-.comment ul {
-    list-style: none;
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+    box-shadow: none;
 }
 
+.comm-btn {
+    border: 1px solid #b35757;
+    margin-bottom: 15px;
+}
 
+.comm-btn:hover {
+    box-shadow: 1px 1px 10px #b34848;
+}
+
+.comment {
+    margin-top: 20px;
+}
+
+.comment ul {
+    list-style: none;
+    border-bottom: 1px solid #ccc;  
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+
+.writeComment {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px
+}
+
+nav.blog-pagination {
+    padding-top: 20px;
+}
 
 @media (min-width: 40em) {
     .blog-title {

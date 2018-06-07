@@ -43,32 +43,35 @@ $sql = "SELECT posts.id, posts.title, posts.body, posts.author, posts.created_at
                         <h2 class="blog-post-title">
                             <?php echo ($post['title']) ?>
                         </h2>
+                        <p>
+                            <?php echo ($post['body']) ?>
+                        </p>
                         <p class="blog-post-meta">
                             <?php echo date('d/m/Y H:i\h', strtotime($post['created_at'])) ?>
                             <a href="#"><?php echo ($post['author']) ?></a>
                         </p>
-                        <p>
-                            <?php echo ($post['body']) ?>
-                        </p>
 
                 </div><!-- /.blog-post -->
 
-                <button type="button" class="btn btn-secondary">Hide comments</button>
+                    <form action="" method="POST">
+                        <p class="writeComment">Example text</p>
+                        <button class="comm-btn btn btn-default" href="#">Submit</button> 
+                    </form>
+                    
+                    <?php if(!empty($comment['tekst'])) {?>
+                        <button type="button" class="comm-btn btn btn-default" onclick="myFunction()">Hide comments</button>
 
-                
-
-                <div class="comment">
-                    <?php 
-                        foreach ($comments as $comment) { 
-                    ?>
-                        <ul>
-                            <li><a href="#"><?php echo ($comment['author'])  ?></a></li>
-                            <li><?php echo ($comment['text']) . "<hr/>" ?></li>
-                        </ul>
-                    <?php 
-                        } 
-                    ?>
-                </div>
+                    <div class="comment">
+                        <?php 
+                            foreach ($comments as $comment) { 
+                        ?>
+                            <ul>
+                                <li><a href="#"><?php echo ($comment['author'])  ?></a></li>
+                                <li><?php echo ($comment['text']) ?></li>
+                            </ul>
+                        <?php } ?>
+                    </div>
+                <?php }?>
 
                 <nav class="blog-pagination">
                     <a class="btn btn-outline-primary" href="#">Older</a>
