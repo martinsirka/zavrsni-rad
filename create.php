@@ -17,21 +17,26 @@ if (!empty($_GET['error'])) {
                 
                 <div class="blog-post">
 
-                <?php if ($error) { ?>
-                    <div class="alert alert-danger">Please fillout all filds.</div>
-                <?php } ?>
+                 <!-- Error message in case theres empty fild -->
+                 <?php 
+                   if ( isset($_GET['error']) ) {
+                       if ( $_GET['error'] == 1 ) {
+                            echo "<h4 class='alert alert-danger text-danger text-center'>Please fillout all filds</h4>";
+                       }
+                   }
+                   ?>
 
                 </div><!-- /.blog-post -->
 
-                    <!-- Create comment form -->
-                    <form action="create_post.php" method="POST">
-                        <div class="form-group">
-                            <input class="form-control" type="text" name="author" placeholder="Author of post">
-                            <input class="form-control" type="text" name="title" placeholder="Title of post">
-                            <textarea class="writeComment form-control" placeholder="New post" cols="50" rows="5" name="post"></textarea>
-                            <button type="submit" class="comm-btn btn btn-default">Submit</button>
-                        </div>
-                    </form>
+                <!-- Create comment form -->
+                <form action="create_post.php" method="POST">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="author" placeholder="Author of post">
+                        <input class="form-control" type="text" name="title" placeholder="Title of post">
+                        <textarea class="writeComment form-control" placeholder="New post" name="post"></textarea>
+                        <button type="submit" class="comm-btn btn btn-default">Submit</button>
+                    </div>
+                </form>
 
                 <nav class="blog-pagination">
                     <a class="btn btn-outline-primary" href="#">Older</a>

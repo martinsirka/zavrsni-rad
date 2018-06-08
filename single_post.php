@@ -4,10 +4,6 @@ include 'conection_to_db.php';
 
 $post_id = $_GET['id'];
 
-if (!empty($_GET['error'])) {
-    $error = true;
-}
-
 $sql = "SELECT posts.id AS postsID, posts.title, posts.body, posts.author, posts.created_at, 
                 comments.id, comments.post_id, comments.author AS authorName, comments.tekst 
                 FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = $post_id";
@@ -36,11 +32,7 @@ $sql = "SELECT posts.id AS postsID, posts.title, posts.body, posts.author, posts
                 );
     }
 
-    // koristite var_dump kada god treba da proverite sadrzaj neke promenjive
-        // echo '<pre>';
-        // var_dump($comments);
-        // echo '</pre>';
-        ?>
+?>
 
     <main role="main" class="container">
 
@@ -50,10 +42,15 @@ $sql = "SELECT posts.id AS postsID, posts.title, posts.body, posts.author, posts
                 
                 <div class="blog-post">
 
-                    <?php if ($error) { ?>
-                        <div class="alert alert-danger">In order to leave comment you have to fill all given filds!</div>
-                    <?php } ?>
-
+                    <!-- Error message in case theres empty fild -->
+                   <?php 
+                   if ( isset($_GET['error']) ) {
+                       if ( $_GET['error'] == 1 ) {
+                            echo "<h4 class='alert alert-danger text-danger text-center'>Please fillout all filds</h4>";
+                       }
+                   }
+                   ?>
+                
                     <h2 class="blog-post-title">
                         <?php echo ($post['title']) ?>
                     </h2>
@@ -65,40 +62,40 @@ $sql = "SELECT posts.id AS postsID, posts.title, posts.body, posts.author, posts
                         <a href="#"><?php echo ($post['author']) ?></a>
                     </p>
 
-                    <!-- Delete post form -->
+                    <!-- Delete POST -->
 
-                    <form action="delete_post.php" method="POST">
+                    <p id="demo">
+
+                    <form onsubmit='return confirm("Are you sure you want to delete this post?");' action="delete_post.php" method="POST">
                         <input type="hidden" name="postId" value="<?php echo $post_id ?>">
-                        <button class="comm-btn btn btn-default">Delete post</button>
+                        <button class="comm-btn btn btn-default" >Delete post</button>
                     </form>
 
                 </div><!-- /.blog-post -->
 
-                    <!-- Create comment form -->
-                    <form action="create_comment.php" method="POST">
-                        <div class="form-group">
-                            <input type="hidden" name="postId" value="<?php echo $post_id ?>">
-                            <input class="form-control author" type="text" name="author" placeholder="Author">
-                            <textarea class="writeComment form-control" placeholder="Your comment.." name="comment"></textarea>
-                            <button type="submit" class="comm-btn btn btn-default ">Submit</button>
-                        </div>
-                    </form>
+                <!-- Create comment form -->
+                <form action="create_comment.php" method="POST">
+                    <div class="form-group">
+                        <input type="hidden" name="postId" value="<?php echo $post_id ?>">
+                        <input class="form-control author" type="text" name="author" placeholder="Author">
+                        <textarea class="writeComment form-control" placeholder="Your comment.." name="comment"></textarea>
+                        <button type="submit" class="comm-btn btn btn-default ">Submit</button>
+                    </div>
+                </form>
                     
-                    <?php if(!empty($comment['tekst'])) {?>
-                        <button type="button" class="comm-btn btn btn-default" onclick="myFunction()">Hide comments</button>
+                <?php if(!empty($comment['tekst'])) {?>
+
+                    <button type="button" class="comm-btn btn btn-default" onclick="myFunction()">Hide comments</button>
 
                     <div class="comment">
-                        <?php 
-                            foreach ($comments as $comment) { 
-                        ?>
-                  
-                    <!-- Print comments and Delete comment form -->
-                            
+                        <?php  foreach ($comments as $comment) { ?>
+                    
+                            <!-- Print comments and Delete comment form -->
                             <ul>
                                 <li><a href="#"><?php echo ($comment['author'])  ?></a></li>
                                 <li><?php echo ($comment['text']) ?></li>
-                                <li> 
-                                <form action="delete_comment.php" method="POST">
+
+                                <form onsubmit='return confirm("Are you sure you want to delete this comment?");' action="delete_comment.php" method="POST">
                                     <input type="hidden" name="postId" value="<?php echo $post_id ?>">
                                     <input type="hidden" name="commentId" value="<?php echo $comment['id'] ?>">
                                     <button class="comm-btn btn btn-default">Delete comment</button>
@@ -106,8 +103,10 @@ $sql = "SELECT posts.id AS postsID, posts.title, posts.body, posts.author, posts
                             </ul>
                             
                         <?php } ?>
+
                     </div>
-                <?php }?>
+
+                <?php } ?>
 
                 <nav class="blog-pagination">
                     <a class="btn btn-outline-primary" href="#">Older</a>

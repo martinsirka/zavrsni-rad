@@ -1,3 +1,4 @@
+
 function myFunction() {
     var hideComm = document.querySelector(".comment");
     if (hideComm.style.display === "none") {
@@ -9,3 +10,12 @@ function myFunction() {
         document.querySelector(".hide-comm-btn").innerHTML="Show comments";
     }
 }
+
+
+
+function warrning() {
+    var conf = confirm('Do you really want to delete this post?');
+}
+
+
+
