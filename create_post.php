@@ -1,17 +1,17 @@
 <?php
 
-$postId = $_POST['postId']; 
 $author = $_POST['author'];
-$comment = $_POST['comment'];
+$title = $_POST['title'];
+$post = $_POST['post'];
 
 
-if (empty($author) || empty($comment)) {
-    header('Location: single_post.php?id=' . $postId .'&error=1');
+if (empty($author) || empty($post)) {
+    header('Location: create.php?error=1');
 }
 
-if (!empty($author) && !empty($comment)) {
-    header('Location: single_post.php?id=' . $postId);    
-
+if (!empty($author) && !empty($post)) {
+        header('Location: index.php');    
+    
     $servername = "127.0.0.1";
     $username = "root";
     $password = "";
@@ -22,8 +22,8 @@ if (!empty($author) && !empty($comment)) {
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $sql = "INSERT INTO comments (post_id, author, tekst) 
-        VALUES ($postId, '$author', '$comment')";
+        $sql = "INSERT INTO posts (author, title, body, created_at) 
+        VALUES ('$author', '$title', '$post', NOW())";
         // use exec() because no results are returned
         $conn->exec($sql);
         
@@ -33,7 +33,7 @@ if (!empty($author) && !empty($comment)) {
     }
     
     $conn = null;
-
+    
 }
 
 ?>

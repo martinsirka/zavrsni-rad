@@ -1,5 +1,5 @@
 <?php 
-include 'partials/header.php';
+include 'partials/head.php';
 
 include 'conection_to_db.php';
 

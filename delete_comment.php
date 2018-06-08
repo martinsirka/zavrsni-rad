@@ -1,7 +1,7 @@
 <?php
 
-$postId=$_GET['postsID'];
-$commentId=$_GET['commentID'];
+$postId = $_POST['postId'];
+$commentId = $_POST['commentId'];
 
     $servername = "127.0.0.1";
     $username = "root";
@@ -19,7 +19,8 @@ $commentId=$_GET['commentID'];
 
         // use exec() because no results are returned
         $conn->exec($sql);
-        echo "Record deleted successfully";
+        
+        header('Location: single_post.php?id=' . $postId);
         }
     catch(PDOException $e)
         {

@@ -1,5 +1,5 @@
 <?php 
-    include 'partials/header.php';
+    include 'partials/head.php';
     include 'conection_to_db.php'; 
 
     $sql = "SELECT * FROM posts ORDER BY created_at DESC";
@@ -19,8 +19,6 @@
         // echo '<pre>';
         // var_dump($posts);
         // echo '</pre>';
-
-    
 
 ?>
 

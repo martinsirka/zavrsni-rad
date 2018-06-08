@@ -35,6 +35,14 @@ h5,
     box-shadow: none;
 }
 
+.form-group input {
+    margin-bottom: 10px;
+}
+
+.form-group button {
+    margin-top: 10px;
+}
+
 .comm-btn {
     border: 1px solid #b35757;
     margin-bottom: 15px;
